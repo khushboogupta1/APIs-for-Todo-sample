@@ -10,13 +10,13 @@
 
     $app->get('/getBooks', function () 
     {
-        $sql="SELECT * FROM books";die;
+        $sql="SELECT * FROM books";
         try {
             $stmt = getConnection()->query($sql);
             $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $db = null;
             
-            return json_encode($books)->withHeader('Access-Control-Allow-Origin', 'http://4f72ff56.ngrok.io/');
+            return json_encode($books);
         } catch(PDOException $e) {
             echo '{"error":{"text":'. $e->getMessage() .'}}';
         }
@@ -31,7 +31,7 @@
             $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $db = null;
             
-            return json_encode($books)->withHeader('Access-Control-Allow-Origin', 'http://4f72ff56.ngrok.io/');
+            return json_encode($books);
             ;
         } catch(PDOException $e) {
             echo '{"error":{"text":'. $e->getMessage() .'}}';
@@ -42,6 +42,20 @@
     {
         $bookId = $request->getAttribute('bookId');
         $sql="SELECT * FROM tasks WHERE belongsTo= $bookId";
+        try {
+            $stmt = getConnection()->query($sql);
+            $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $db = null;
+            
+            return json_encode($books);
+        } catch(PDOException $e) {
+            echo '{"error":{"text":'. $e->getMessage() .'}}';
+        }
+    });
+
+    $app->get('/tasks', function ($request) 
+    {
+        $sql="SELECT * FROM tasks";
         try {
             $stmt = getConnection()->query($sql);
             $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
