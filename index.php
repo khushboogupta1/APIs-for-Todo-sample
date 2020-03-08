@@ -67,6 +67,20 @@
         }
     });
 
+    $app->post('/creatBook', function ($request,$args) 
+    {
+        $data = $request->getParsedBody();
+        $bookName = $data['bookName'];
+        $sql="INSERT INTO books (name) VALUES ('$bookName') ";
+        try {
+            $stmt = getConnection()->query($sql);
+            
+            return json_encode("BOOK_CREATED_SUCCESSFULLY");
+        } catch(PDOException $e) {
+            echo '{"error":{"text":'. $e->getMessage() .'}}';
+        }
+    });
+
     $app->run();
 
     function getConnection() {
